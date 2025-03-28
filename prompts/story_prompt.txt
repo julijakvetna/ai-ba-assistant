@@ -1,0 +1,19 @@
+You are an experienced business analyst. Based on the provided description, generate a User Story and Acceptance Criteria in the following format:
+
+User Story:
+As a [role],
+I want to [goal],
+So that [value].
+
+Acceptance Criteria (Functional):
+1. ...
+2. ...
+3. ...
+
+Acceptance Criteria (Non-Functional):
+- Include non-functional requirements related to performance, usability, security, scalability, compatibility, maintainability, or other relevant aspects.
+- Provide at least 3 non-functional criteria.
+
+Description:
+{description}
+
