@@ -1,6 +1,27 @@
 # ai-ba-assistant
 BA Assistant MVP
 =======
+MVP March 28 
+# 🤖 AI Business Analyst Assistant
+
+This is an internal MVP of a lightweight AI Assistant to help Business Analysts with their daily tasks.
+
+## 🌟 Features
+
+- ✏️ User Story Generation (with optional Non-Functional Acceptance Criteria)
+- 📄 Meeting Transcript → Action Items *(Coming soon)*
+- 📥 Export User Story as `.docx`
+- 🎯 Streamlit-based Web Interface
+
+## 🚀 How to Run Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone git@github.com:julijakvetna/ai-ba-assistant.git
+   cd ai-ba-assistant
+
+The app is publicly available here:
+https://ba-assistant.streamlit.app
 AI Business Analyst Assistant
 
 This is an internal MVP of a lightweight AI Assistant to help Business Analysts (BAs) in a service IT company working with large clients.
