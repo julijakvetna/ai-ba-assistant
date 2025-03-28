@@ -1,5 +1,5 @@
 import streamlit as st
-from generator import generate_user_story, generate_user_story_enhanced, generate_action_items
+from generator import generate_user_story, generate_user_story_enhanced
 from io import BytesIO
 from docx import Document
 
@@ -14,73 +14,30 @@ if mode == "User Story Generation":
     enhanced = st.checkbox("Add Non-Functional Acceptance Criteria")
 
     with st.form("user_story_form"):
-        description = st.text_area("Describe a feature, business need, or client request", height=200)
+        description = st.text_area("Describe a feature, business need, or client request")
         submitted = st.form_submit_button("Generate User Story")
 
-        if submitted:
-            if not description.strip():
-                st.warning("Please enter a description.")
-            else:
-                with st.spinner("Generating user story..."):
-                    if enhanced:
-                        result = generate_user_story_enhanced(description)
-                    else:
-                        result = generate_user_story(description)
-                st.success("Done!")
-                st.text_area("📄 Generated User Story", result, height=400)
+    if submitted and description:
+        if enhanced:
+            user_story = generate_user_story_enhanced(description)
+        else:
+            user_story = generate_user_story(description)
 
-                # Export buttons
-                st.download_button(
-                    label="💾 Download as .md",
-                    data=result.encode('utf-8'),
-                    file_name="user_story.md",
-                    mime="text/markdown"
-                )
+        st.subheader("Generated User Story")
+        st.code(user_story)
 
-                # Export to docx
-                doc = Document()
-                doc.add_paragraph(result)
-                buffer = BytesIO()
-                doc.save(buffer)
-                st.download_button(
-                    label="💾 Download as .docx",
-                    data=buffer.getvalue(),
-                    file_name="user_story.docx",
-                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                )
+        # Сохраняем в .docx для загрузки
+        doc = Document()
+        doc.add_paragraph(user_story)
+        buffer = BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
 
-if mode == "Meeting Transcript → Action Items":
-    st.subheader("Convert Meeting Transcript to Action Items")
-
-    with st.form("transcript_form"):
-        transcript = st.text_area("Paste the meeting transcript here", height=200)
-        submitted_transcript = st.form_submit_button("Generate Action Items")
-
-        if submitted_transcript:
-            if not transcript.strip():
-                st.warning("Please enter the transcript.")
-            else:
-                with st.spinner("Extracting action items..."):
-                    result = generate_action_items(transcript)
-                st.success("Done!")
-                st.text_area("✅ Action Items", result, height=300)
-
-                # Export buttons
-                st.download_button(
-                    label="💾 Download as .md",
-                    data=result.encode('utf-8'),
-                    file_name="action_items.md",
-                    mime="text/markdown"
-                )
-
-                doc = Document()
-                doc.add_paragraph(result)
-                buffer = BytesIO()
-                doc.save(buffer)
-                st.download_button(
-                    label="💾 Download as .docx",
-                    data=buffer.getvalue(),
-                    file_name="action_items.docx",
-                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                )
+        # Добавляем кнопку загрузки
+        st.download_button(
+            label="📥 Download User Story (.docx)",
+            data=buffer,
+            file_name="user_story.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
 
