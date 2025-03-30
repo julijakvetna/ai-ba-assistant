@@ -2,6 +2,7 @@ import streamlit as st
 from generator import generate_user_story, generate_user_story_enhanced
 from io import BytesIO
 from docx import Document
+from generator import generate_flowchart
 
 st.set_page_config(page_title="AI BA Assistant", layout="centered")
 st.title("📋 AI Business Analyst Assistant")
