@@ -41,3 +41,25 @@ if mode == "User Story Generation":
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
 
+if mode == "Meeting Transcript → Action Items":
+    st.subheader("Extract Action Items from Meeting Transcript")
+
+    with st.form("transcript_form"):
+        transcript = st.text_area("Paste meeting transcript here")
+        submitted = st.form_submit_button("Extract Action Items")
+
+        if submitted and transcript:
+            with st.spinner("Analyzing transcript..."):
+                action_items = generate_action_items(transcript)
+                st.success("Action Items extracted:")
+                st.write(action_items)
+
+                # Скачать результат
+                txt_bytes = BytesIO(action_items.encode("utf-8"))
+                st.download_button(
+                    label="Download Action Items (.txt)",
+                    data=txt_bytes,
+                    file_name="action_items.txt",
+                    mime="text/plain"
+                )
+
