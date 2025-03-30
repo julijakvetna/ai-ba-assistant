@@ -6,7 +6,11 @@ from docx import Document
 st.set_page_config(page_title="AI BA Assistant", layout="centered")
 st.title("📋 AI Business Analyst Assistant")
 
-mode = st.radio("Select Mode:", ["User Story Generation", "Meeting Transcript → Action Items"])
+mode = st.radio("Select Mode:", [
+    "User Story Generation", 
+    "Meeting Transcript → Action Items", 
+    "Diagram Generation"
+])
 
 if mode == "User Story Generation":
     st.subheader("Generate User Story with Acceptance Criteria")
@@ -16,7 +20,6 @@ if mode == "User Story Generation":
     with st.form("user_story_form"):
         description = st.text_area("Describe a feature, business need, or client request")
         submitted = st.form_submit_button("Generate User Story")
-
     if submitted and description:
         if enhanced:
             user_story = generate_user_story_enhanced(description)
@@ -62,4 +65,17 @@ if mode == "Meeting Transcript → Action Items":
                     file_name="action_items.txt",
                     mime="text/plain"
                 )
+
+elif mode == "Diagram Generation":
+    st.subheader("Generate Flowchart / Diagram")
+
+    with st.form("diagram_form"):
+        process_description = st.text_area("Describe the process or user story flow")
+        submitted = st.form_submit_button("Generate Diagram")
+
+        if submitted and process_description:
+            with st.spinner("Generating diagram..."):
+                diagram_code = generate_flowchart(process_description)
+                st.success("Diagram Generated:")
+                st.code(diagram_code, language="mermaid")
 

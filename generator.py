@@ -63,3 +63,17 @@ def generate_user_story_enhanced(description):
 
     return response.choices[0].message.content
 
+def generate_flowchart(description):
+    prompt = f"""
+    Based on the following process description, generate a simple Mermaid.js flowchart:
+    
+    {description}
+    
+    Output only the Mermaid diagram code without explanation.
+    """
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content.strip()
+
