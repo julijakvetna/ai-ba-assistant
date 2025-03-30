@@ -77,3 +77,17 @@ def generate_flowchart(description):
     )
     return response.choices[0].message.content.strip()
 
+def generate_bpmn(description):
+    prompt = f"""
+Based on the following business process description, generate a valid BPMN diagram code in PlantUML syntax.
+The output should start with @startuml and end with @enduml. No explanations, only the code.
+
+Process Description:
+{description}
+"""
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content.strip()
+
