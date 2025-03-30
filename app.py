@@ -3,6 +3,7 @@ from generator import generate_user_story, generate_user_story_enhanced
 from io import BytesIO
 from docx import Document
 from generator import generate_flowchart
+from generator import generate_bpmn
 from generator import generate_user_story, generate_user_story_enhanced, generate_action_items, generate_flowchart, generate_bpmn
 
 st.set_page_config(page_title="AI BA Assistant", layout="centered")
@@ -86,27 +87,21 @@ elif mode == "BPMN Diagram Generation":
     st.subheader("Generate BPMN Diagram")
 
     with st.form("bpmn_form"):
-        bpmn_description = st.text_area("Describe the business process (for BPMN)")
+        bpmn_description = st.text_area("Describe the process for BPMN diagram")
         submitted = st.form_submit_button("Generate BPMN Diagram")
 
-        if submitted and bpmn_description:
-            with st.spinner("Generating BPMN diagram..."):
-                bpmn_code = generate_bpmn(bpmn_description)
-                st.success("BPMN Diagram Code:")
-                st.code(bpmn_code, language="plantuml")
+    if submitted and bpmn_description:
+        with st.spinner("Generating BPMN diagram..."):
+            bpmn_code = generate_bpmn(bpmn_description)
+            st.success("BPMN Diagram Generated:")
+            st.code(bpmn_code, language="plantuml")
 
-                # Embed PlantUML live render
-                encoded = bpmn_code.replace("@startuml", "").replace("@enduml", "")
-                encoded = encoded.replace(" ", "%20").replace("\n", "%0A")
-                plantuml_url = f"https://www.plantuml.com/plantuml/svg/~h{encoded}"
-                st.markdown(f"![BPMN Diagram]({plantuml_url})")
-
-                # Download as .puml
-                puml_bytes = BytesIO(bpmn_code.encode("utf-8"))
-                st.download_button(
-                    label="⬇️ Download BPMN (.puml)",
-                    data=puml_bytes,
-                    file_name="bpmn_diagram.puml",
-                    mime="text/plain"
-                )
+            # Optional download button (возможна ошибка из-за ограничений Streamlit Cloud)
+            bpmn_bytes = BytesIO(bpmn_code.encode("utf-8"))
+            st.download_button(
+                label="⬇️ Download BPMN Diagram (.txt)",
+                data=bpmn_bytes,
+                file_name="bpmn_diagram.txt",
+                mime="text/plain"
+            )
 
