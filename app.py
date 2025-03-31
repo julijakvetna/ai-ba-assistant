@@ -87,21 +87,22 @@ elif mode == "BPMN Diagram Generation":
     st.subheader("Generate BPMN Diagram")
 
     with st.form("bpmn_form"):
-        bpmn_description = st.text_area("Describe the process for BPMN diagram")
+        bpmn_description = st.text_area("Describe the BPMN process (e.g. ':user logs in; :system validates;')")
         submitted = st.form_submit_button("Generate BPMN Diagram")
 
     if submitted and bpmn_description:
         with st.spinner("Generating BPMN diagram..."):
-            bpmn_code = generate_bpmn(bpmn_description)
-            st.success("BPMN Diagram Generated:")
+            bpmn_code, diagram_url = generate_bpmn(bpmn_description)
+            st.success("BPMN Diagram Generated!")
             st.code(bpmn_code, language="plantuml")
+            st.image(diagram_url, caption="BPMN Diagram (PlantUML Server)")
 
-            # Optional download button (возможна ошибка из-за ограничений Streamlit Cloud)
+            # Optional download
+            from io import BytesIO
             bpmn_bytes = BytesIO(bpmn_code.encode("utf-8"))
             st.download_button(
-                label="⬇️ Download BPMN Diagram (.txt)",
+                label="⬇️ Download BPMN Diagram (.puml)",
                 data=bpmn_bytes,
-                file_name="bpmn_diagram.txt",
+                file_name="bpmn_diagram.puml",
                 mime="text/plain"
             )
-

@@ -1,6 +1,8 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+import zlib
+import base64
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -77,17 +79,21 @@ def generate_flowchart(description):
     )
     return response.choices[0].message.content.strip()
 
+def deflate_and_encode(plantuml_text):
+    compressed = zlib.compress(plantuml_text.encode('utf-8'))
+    compressed = compressed[2:-4]
+    encoded = base64.b64encode(compressed).decode('utf-8')
+    return encoded
+
+
 def generate_bpmn(description):
-    prompt = f"""
-    Based on the following process description, generate a BPMN diagram code in PlantUML format.
-
-    {description}
-
-    Output only the PlantUML diagram code without explanation.
+    plantuml_code = f"""
+@startuml
+start
+{description}
+stop
+@enduml
     """
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content.strip()
-
+    encoded = deflate_and_encode(plantuml_code)
+    server_url = f"https://www.plantuml.com/plantuml/png/{encoded}"
+    return plantuml_code.strip(), server_url
