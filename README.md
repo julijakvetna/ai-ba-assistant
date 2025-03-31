@@ -1,6 +1,6 @@
 # 📋 AI Business Analyst Assistant
 
-Welcome to **AI BA Assistant** — your AI-powered helper to speed up Business Analyst tasks.
+Welcome to **AI BA Assistant** — an AI-powered helper designed to simplify and automate Business Analyst tasks.
 
 ---
 
@@ -17,13 +17,12 @@ Welcome to **AI BA Assistant** — your AI-powered helper to speed up Business A
 - Converts process descriptions or user stories into:
   - **Flowchart** in Mermaid.js syntax
   - **BPMN Diagram** in PlantUML syntax
-- Displays BPMN diagram PlantUML code and provides a link to visualize it using a public PlantUML server.
+- Provides PlantUML link for online BPMN visualization.
 
 ✅ **Project Context Reminder**
 - Allows selecting or adding a project.
-- Displays project goals, stakeholders, constraints, and current issues.
-- Context information is automatically shown when working with User Stories, Action Items, or Diagrams.
-- Project data is stored locally in `project_context.json` and can be updated from the app interface.
+- Stores project goals, stakeholders, constraints, and current issues in a local JSON file.
+- Displays project context when working with User Stories, Action Items, or Diagrams.
 
 ---
 
@@ -46,31 +45,40 @@ OPENAI_API_KEY=your_key_here
 
 ---
 
-## 🌐 Public Demo
+## 🌟 Usage
 
-The app is available online via Streamlit Cloud:
-**https://your-streamlit-app-link**
-
----
-
-## 🌟 Diagram Generation Usage
-
-1. Select **Diagram Generation** mode.
-2. Describe the process or user story in simple steps, e.g.:
-
-```
-User logs into the system -> User views dashboard -> User selects a report -> System generates the report -> User downloads the report
-```
-
-3. The app will display:
-   - Mermaid.js flowchart code
-   - BPMN Diagram code in PlantUML syntax
-   - Direct visualization link via public PlantUML server:
-     `https://www.plantuml.com/plantuml/uml/{encoded-data}`
+1. Select or create a **Project**.
+2. Choose one of the modes:
+   - User Story Generation
+   - Meeting Transcript → Action Items
+   - Diagram Generation
+3. Enter the required description or transcript.
+4. Receive generated content and download if needed.
 
 ---
 
-## 📌 Roadmap (Next Features)
+## 📄 Example project_context.json
+
+```json
+{
+  "Customer Portal": {
+    "goals": "Provide customers access to invoices and support tickets.",
+    "stakeholders": "Customer Support, End Users",
+    "constraints": "GDPR compliance",
+    "issues": "No self-service option for invoices"
+  },
+  "Timesheet System": {
+    "goals": "Track employee working hours and project allocation.",
+    "stakeholders": "HR, Employees, Managers",
+    "constraints": "Integration with HR system",
+    "issues": "Employees often submit timesheets late"
+  }
+}
+```
+
+---
+
+## 📌 Roadmap
 
 - Export Vision, Scope, Backlog drafts
 - SRS and BRD template generation
@@ -78,3 +86,4 @@ User logs into the system -> User views dashboard -> User selects a report -> Sy
 - Risk analysis for requirements
 - User Story Map & Data Flow diagrams
 - Multi-project & multi-client support
+
