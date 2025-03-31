@@ -1,62 +1,79 @@
-# ai-ba-assistant
-BA Assistant MVP
-=======
-MVP March 28 
-# 🤖 AI Business Analyst Assistant
+# 📋 AI Business Analyst Assistant
 
-This is an internal MVP of a lightweight AI Assistant to help Business Analysts with their daily tasks.
+Welcome to **AI BA Assistant** — your AI-powered helper to speed up Business Analyst tasks.
 
-## 🌟 Features
+---
 
-- ✏️ User Story Generation (with optional Non-Functional Acceptance Criteria)
-- 📄 Meeting Transcript → Action Items *(Coming soon)*
-- 📥 Export User Story as `.docx`
-- 🎯 Streamlit-based Web Interface
+## 🚀 Features
 
-## 🚀 How to Run Locally
+✅ **User Story Generation**
+- Generates User Stories with Acceptance Criteria based on business descriptions.
+- Optionally adds Non-Functional Acceptance Criteria.
 
-1. **Clone the repository**
-   ```bash
-   git clone git@github.com:julijakvetna/ai-ba-assistant.git
-   cd ai-ba-assistant
+✅ **Meeting Transcript → Action Items**
+- Extracts clear action items from meeting transcripts.
 
-The app is publicly available here:
-https://ba-assistant.streamlit.app
-AI Business Analyst Assistant
+✅ **Diagram Generation (Flowchart & BPMN)**
+- Converts process descriptions or user stories into:
+  - **Flowchart** in Mermaid.js syntax
+  - **BPMN Diagram** in PlantUML syntax
+- Displays BPMN diagram PlantUML code and provides a link to visualize it using a public PlantUML server.
 
-This is an internal MVP of a lightweight AI Assistant to help Business Analysts (BAs) in a service IT company working with large clients.
+---
 
-Features:
+## ⚙️ How to Run Locally
 
-✏️ User Story Generation (with optional Non-Functional Acceptance Criteria)
-📄 Meeting Transcript → Action Items
-💾 Export results as .md and .docx
-🔄 Simple web interface (Streamlit-based)
-🎯 How to Run Locally
-
-Clone the repository (optional):
-git clone [repo-url]
+```bash
+git clone https://github.com/julijakvetna/ai-ba-assistant.git
 cd ai-ba-assistant
-Activate virtual environment:
+python3 -m venv venv
 source venv/bin/activate
-Install dependencies:
 pip install -r requirements.txt
-Add your OpenAI API key: Create a .env file:
-OPENAI_API_KEY=sk-...
-Run the assistant:
-python -m streamlit run app.py
-🟢 Current MVP Scope
+streamlit run app.py
+```
 
-Feature	Status
-User Story Generation	✅
-Non-Functional Acceptance Criteria Option	✅
-Meeting Transcript → Action Items	✅
-Export to .md and .docx	✅
-🚀 Next Planned Features
+Create `.env` file and add your OpenAI API key:
 
-Export to Confluence
-Jira integration
-Project log and context switch helper
-Requirements version control
+```
+OPENAI_API_KEY=your_key_here
+```
 
->>>>>>> 74a5849 (MVP ready for testing)
+---
+
+## 🌐 Public Demo
+
+The app is available online via Streamlit Cloud:
+**https://your-streamlit-app-link**
+
+---
+
+## 🌟 Diagram Generation Usage
+
+1. Select **Diagram Generation** mode.
+2. Describe the process or user story in simple steps, e.g.:
+
+```
+User logs into the system -> User views dashboard -> User selects a report -> System generates the report -> User downloads the report
+```
+
+3. The app will display:
+   - Mermaid.js flowchart code
+   - BPMN Diagram code in PlantUML syntax
+   - Direct visualization link via public PlantUML server:
+     `https://www.plantuml.com/plantuml/uml/{encoded-data}`
+
+---
+
+## 📌 Roadmap (Next Features)
+
+- Export Vision, Scope, Backlog drafts
+- SRS and BRD template generation
+- Jira & Confluence integration
+- Risk analysis for requirements
+- User Story Map & Data Flow diagrams
+- Multi-project & multi-client support
+
+---
+
+
+
