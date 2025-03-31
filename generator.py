@@ -1,5 +1,6 @@
 import os
 from openai import OpenAI
+from plantuml_encoder import encode_plantuml
 from dotenv import load_dotenv
 import zlib
 import base64
@@ -86,14 +87,12 @@ def deflate_and_encode(plantuml_text):
     return encoded
 
 
-def generate_bpmn(description):
-    plantuml_code = f"""
-@startuml
-start
-{description}
-stop
+def generate_bpmn(bpmn_description):
+    bpmn_code = f"""@startuml
+{bpmn_description}
 @enduml
-    """
-    encoded = deflate_and_encode(plantuml_code)
-    server_url = f"https://www.plantuml.com/plantuml/png/{encoded}"
-    return plantuml_code.strip(), server_url
+"""
+    encoded = encode_plantuml(bpmn_code)
+    diagram_url = f"https://www.plantuml.com/plantuml/png/{encoded}"
+    return bpmn_code, diagram_url
+
