@@ -19,6 +19,12 @@ Welcome to **AI BA Assistant** — your AI-powered helper to speed up Business A
   - **BPMN Diagram** in PlantUML syntax
 - Displays BPMN diagram PlantUML code and provides a link to visualize it using a public PlantUML server.
 
+✅ **Project Context Reminder**
+- Allows selecting or adding a project.
+- Displays project goals, stakeholders, constraints, and current issues.
+- Context information is automatically shown when working with User Stories, Action Items, or Diagrams.
+- Project data is stored locally in `project_context.json` and can be updated from the app interface.
+
 ---
 
 ## ⚙️ How to Run Locally
@@ -72,8 +78,3 @@ User logs into the system -> User views dashboard -> User selects a report -> Sy
 - Risk analysis for requirements
 - User Story Map & Data Flow diagrams
 - Multi-project & multi-client support
-
----
-
-
-

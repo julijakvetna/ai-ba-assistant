@@ -1,9 +1,27 @@
 import streamlit as st
+import json
+import os
 from generator import generate_user_story, generate_user_story_enhanced, generate_action_items, generate_diagram
 from io import BytesIO
 from docx import Document
 
+PROJECT_FILE = "project_context.json"
+
+
+def load_project_context():
+    if not os.path.exists(PROJECT_FILE):
+        return {}
+    with open(PROJECT_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_project_context(context):
+    with open(PROJECT_FILE, "w", encoding="utf-8") as f:
+        json.dump(context, f, indent=4)
+
+
 st.set_page_config(page_title="AI BA Assistant", layout="centered")
+
 st.title("📋 AI Business Analyst Assistant")
 
 mode = st.radio("Select Mode:", [
@@ -11,6 +29,37 @@ mode = st.radio("Select Mode:", [
     "Meeting Transcript → Action Items",
     "Diagram Generation"
 ])
+
+# Load Project Context
+project_context = load_project_context()
+project_names = list(project_context.keys())
+
+selected_project = st.selectbox("Select Project:", project_names + ["➕ Add New Project"])
+
+if selected_project == "➕ Add New Project":
+    new_project = st.text_input("Enter new project name")
+    if new_project:
+        goals = st.text_input("Project Goals")
+        stakeholders = st.text_area("Stakeholders (comma separated)")
+        constraints = st.text_input("Constraints")
+        issues = st.text_area("Current Issues")
+        if st.button("Save Project"):
+            project_context[new_project] = {
+                "goals": goals,
+                "stakeholders": [s.strip() for s in stakeholders.split(",")],
+                "constraints": constraints,
+                "current_issues": issues
+            }
+            save_project_context(project_context)
+            st.success(f"Project '{new_project}' saved. Please reload the page.")
+            st.stop()
+else:
+    st.info(f"""
+    **🎯 Goals:** {project_context[selected_project]["goals"]}
+    **👥 Stakeholders:** {", ".join(project_context[selected_project]["stakeholders"])}
+    **🚧 Constraints:** {project_context[selected_project]["constraints"]}
+    **❗️ Current Issues:** {project_context[selected_project]["current_issues"]}
+    """)
 
 if mode == "User Story Generation":
     st.subheader("Generate User Story with Acceptance Criteria")
@@ -28,7 +77,6 @@ if mode == "User Story Generation":
         st.subheader("Generated User Story")
         st.code(user_story)
 
-        # Download
         doc = Document()
         doc.add_paragraph(user_story)
         buffer = BytesIO()
@@ -53,7 +101,6 @@ if mode == "Meeting Transcript → Action Items":
             st.success("Action Items extracted:")
             st.write(action_items)
 
-        # Download
         txt_bytes = BytesIO(action_items.encode("utf-8"))
         st.download_button(
             label="Download Action Items (.txt)",
