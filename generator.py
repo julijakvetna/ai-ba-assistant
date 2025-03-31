@@ -1,16 +1,16 @@
-import openai
 import os
 import base64
 import zlib
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # --- User Story Generation ---
 def generate_user_story(description):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": f"Generate a User Story with Acceptance Criteria based on: {description}"}
@@ -20,7 +20,7 @@ def generate_user_story(description):
 
 
 def generate_user_story_enhanced(description):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": f"Generate a User Story with functional and non-functional Acceptance Criteria based on: {description}"}
@@ -31,7 +31,7 @@ def generate_user_story_enhanced(description):
 
 # --- Action Items ---
 def generate_action_items(transcript):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": f"Extract clear action items from the following meeting transcript: {transcript}"}
